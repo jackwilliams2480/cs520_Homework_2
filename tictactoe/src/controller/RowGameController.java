@@ -51,6 +51,13 @@ public class RowGameController {
 	}
     }
 
+	/**
+     * Checks whether the given player has won
+     *
+     * @param block The block to be moved to by the current player
+	 * @param playerChar String of the current player (X or O)
+	 * @param result String to be printed proclaiming the winner
+     */
 	public void checkWinner(JButton block, String playerChar, String result){
 		if(playerChar.equals("X")){
 			gameModel.player = "2";
