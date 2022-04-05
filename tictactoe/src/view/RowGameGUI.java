@@ -11,11 +11,11 @@ import model.RowGameModel;
 import controller.RowGameController;
 
 public class RowGameGUI {
-    public JFrame gui = new JFrame("Tic Tac Toe");
-    public RowGameModel gameModel = new RowGameModel();
-    public JButton[][] blocks = new JButton[3][3];
-    public JButton reset = new JButton("Reset");
-    public JTextArea playerturn = new JTextArea();
+    private JFrame gui = new JFrame("Tic Tac Toe");
+    private RowGameModel gameModel = new RowGameModel();
+    private JButton[][] blocks = new JButton[3][3];
+    private JButton reset = new JButton("Reset");
+    private JTextArea playerturn = new JTextArea();
 
     /**
      * Creates a new game initializing the GUI.
@@ -71,7 +71,62 @@ public class RowGameGUI {
      * @param column The column that contains the block
      */
     public void updateBlock(RowGameModel gameModel, int row, int column) {
-	blocks[row][column].setText(gameModel.blocksData[row][column].getContents());
-	blocks[row][column].setEnabled(gameModel.blocksData[row][column].getIsLegalMove());
+	blocks[row][column].setText(gameModel.getBLockModel()[row][column].getContents());
+	blocks[row][column].setEnabled(gameModel.getBLockModel()[row][column].getIsLegalMove());
     }
+
+    /**
+     * gets the JButton block array
+     *
+     * @return JButton block array
+     */
+    public JButton[][] getBlocks(){
+        return this.blocks;
+    }
+
+    /**
+     * gets the GUI
+     *
+     * @return JFrame
+     */
+    public JFrame getGui() {
+        return this.gui;
+    }
+
+    /**
+     * Sets the GUI
+     *
+     * @param JFrame new gui
+     */
+    public void setGui(JFrame gui) {
+        this.gui = gui;
+    }
+
+    /**
+     * gets the RowGameModel
+     *
+     * @return RowGameModel
+     */
+    public RowGameModel getGameModel() {
+        return this.gameModel;
+    }
+
+    /**
+     * gets the JTextArea playerTurn
+     *
+     * @return JTextArea playerTurn
+     */
+    public JTextArea getPlayerturn() {
+        return this.playerturn;
+    }
+
+    /**
+     * sets the JTextArea playerTurn
+     *
+     * @param JTextArea playerTurn
+     */
+    public void setPlayerturn(JTextArea playerturn) {
+        this.playerturn = playerturn;
+    }
+
 }
