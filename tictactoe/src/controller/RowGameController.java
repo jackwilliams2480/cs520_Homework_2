@@ -3,6 +3,7 @@ package controller;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.text.html.BlockView;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.*;
@@ -37,19 +38,25 @@ public class RowGameController {
      * @param block The block to be moved to by the current player
      */
     public void move(JButton block) {
-	gameModel.movesLeft--;
-	if(gameModel.movesLeft%2 == 1) {
-	    gameView.playerturn.setText("'X': Player 1");
-	} else{
-	    gameView.playerturn.setText("'O': Player 2");
-	}
-	
-	if(gameModel.player.equals("1")) {
-	    // Check whether player 1 won
-		checkWinner(block, "X", "Player 1 wins!");
-	} else {
-		checkWinner(block, "O", "Player 2 wins!");
-	}
+		if(!block.getText().isEmpty()){
+			if(!gameView.playerturn.getText().contains("This box has already been taken | ")){
+				gameView.playerturn.setText("This box has already been taken | " + gameView.playerturn.getText());
+			}
+		}else{
+			gameModel.movesLeft--;
+			if(gameModel.movesLeft%2 == 1) {
+				gameView.playerturn.setText("'X': Player 1");
+			} else{
+				gameView.playerturn.setText("'O': Player 2");
+			}
+			
+			if(gameModel.player.equals("1")) {
+				// Check whether player 1 won
+				checkWinner(block, "X", "Player 1 wins!");
+			} else {
+				checkWinner(block, "O", "Player 2 wins!");
+			}
+		}
     }
 
 	/**
