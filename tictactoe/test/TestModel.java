@@ -40,4 +40,32 @@ public class TestModel {
 
         assertEquals(model.getBlockModel()[0][0].getContents() , "X");
     }
+
+    @Test
+    public void testModeIllegalMoveAPI() {
+        RowGameModel model = game.getRowGameModel();
+
+        game.move(game.getRowGameView().getBlocks()[0][0]);
+
+        assertFalse(model.getBlockModel()[0][0].getIsLegalMove());
+    }
+
+    @Test
+    public void testModelLegalMoveAPI() {
+        RowGameModel model = game.getRowGameModel();
+
+        game.move(game.getRowGameView().getBlocks()[0][0]);
+
+        assertTrue(model.getBlockModel()[1][0].getIsLegalMove());
+    }
+
+    @Test
+    public void testAccurateCurrentPlayer() {
+        RowGameModel model = game.getRowGameModel();
+
+        assertEquals(model.getCurentPlayer(), "1");
+        game.move(game.getRowGameView().getBlocks()[0][0]);
+
+        assertEquals(model.getCurentPlayer(), "2");
+    }
 }

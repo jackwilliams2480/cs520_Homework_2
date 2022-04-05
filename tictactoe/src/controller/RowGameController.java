@@ -55,6 +55,7 @@ public class RowGameController {
 				// Check whether player 1 won
 				checkWinner(block, "X", "Player 1 wins!");
 			} else {
+				// Check whether player 2 won
 				checkWinner(block, "O", "Player 2 wins!");
 			}
 		}
@@ -78,6 +79,7 @@ public class RowGameController {
 			for(int col = 0; col < COLUMNS;col++){
 				if(block == gameView.getBlocks()[row][col]) {
 					gameModel.getBlockModel()[row][col].setContents(playerChar);
+					gameModel.getBlockModel()[row][col].setIsLegalMove(false);
 					gameView.updateBlock(gameModel, row, col);
 					if(gameModel.getMovesLeft() < 7) {
 						//check horizontal and vertical win condition

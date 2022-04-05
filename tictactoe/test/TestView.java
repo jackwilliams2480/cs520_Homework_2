@@ -32,4 +32,11 @@ public class TestView {
         game.move(game.getRowGameView().getBlocks()[0][0]);
         assertEquals(gui.getBlocks()[0][0].getText(),"X");
     }
+
+    @Test
+    public void testViewOther() {
+        RowGameGUI gui = game.getRowGameView();
+        game.move(game.getRowGameView().getBlocks()[2][0]);
+        assertEquals(gui.getBlocks()[0][0].getText(),"");
+    }
 }

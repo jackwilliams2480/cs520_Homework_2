@@ -112,4 +112,22 @@ public class TestController {
         assertEquals("Player 1 wins!", model.getFinalResult());
         assertEquals(4, model.getMovesLeft());
     }
+
+    @Test
+    public void testIllegalMoveThenFinishGame() {
+        RowGameModel model = game.getRowGameModel();
+
+        game.move(game.getRowGameView().getBlocks()[0][0]);
+        game.move(game.getRowGameView().getBlocks()[0][0]);
+        assertTrue(game.getRowGameView().getPlayerturn().getText().contains("This box has already been taken | "));
+        
+        game.move(game.getRowGameView().getBlocks()[1][0]);
+        game.move(game.getRowGameView().getBlocks()[0][1]);
+        game.move(game.getRowGameView().getBlocks()[1][1]);
+        game.move(game.getRowGameView().getBlocks()[2][2]);
+        game.move(game.getRowGameView().getBlocks()[1][2]);
+
+        assertEquals("Player 2 wins!", model.getFinalResult());
+        assertEquals(3, model.getMovesLeft());
+    }
 }
