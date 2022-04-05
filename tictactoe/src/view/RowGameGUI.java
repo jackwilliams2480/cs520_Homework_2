@@ -71,8 +71,8 @@ public class RowGameGUI {
      * @param column The column that contains the block
      */
     public void updateBlock(RowGameModel gameModel, int row, int column) {
-	blocks[row][column].setText(gameModel.getBLockModel()[row][column].getContents());
-	blocks[row][column].setEnabled(gameModel.getBLockModel()[row][column].getIsLegalMove());
+	    blocks[row][column].setText(gameModel.getBlockModel()[row][column].getContents());
+	    blocks[row][column].setEnabled(gameModel.getBlockModel()[row][column].getIsLegalMove());
     }
 
     /**

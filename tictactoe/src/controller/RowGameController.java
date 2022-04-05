@@ -26,8 +26,8 @@ public class RowGameController {
 
         for(int row = 0; row<3; row++) {
             for(int column = 0; column<3 ;column++) {
-	        gameModel.getBLockModel()[row][column].setContents("");
-		gameModel.getBLockModel()[row][column].setIsLegalMove(true);
+	        gameModel.getBlockModel()[row][column].setContents("");
+		gameModel.getBlockModel()[row][column].setIsLegalMove(true);
 		gameView.updateBlock(gameModel,row,column);
             }
         }
@@ -77,7 +77,7 @@ public class RowGameController {
 		for(int row = 0;row < ROWS;row++){
 			for(int col = 0; col < COLUMNS;col++){
 				if(block == gameView.getBlocks()[row][col]) {
-					gameModel.getBLockModel()[row][col].setContents(playerChar);
+					gameModel.getBlockModel()[row][col].setContents(playerChar);
 					gameView.updateBlock(gameModel, row, col);
 					if(gameModel.getMovesLeft() < 7) {
 						//check horizontal and vertical win condition
@@ -107,7 +107,7 @@ public class RowGameController {
      */
 	private boolean checkHorizontal(int row){
 		for(int i = 0;i < COLUMNS - 1;i++){
-			if(!gameModel.getBLockModel()[row][i].getContents().equals(gameModel.getBLockModel()[row][i + 1].getContents())){
+			if(!gameModel.getBlockModel()[row][i].getContents().equals(gameModel.getBlockModel()[row][i + 1].getContents())){
 				return false;
 			}
 		}
@@ -121,7 +121,7 @@ public class RowGameController {
      */
 	private boolean checkVertical(int col){
 		for(int i = 0;i < ROWS - 1;i++){
-			if(!gameModel.getBLockModel()[i][col].getContents().equals(gameModel.getBLockModel()[i + 1][col].getContents())){
+			if(!gameModel.getBlockModel()[i][col].getContents().equals(gameModel.getBlockModel()[i + 1][col].getContents())){
 				return false;
 			}
 		}
@@ -135,13 +135,13 @@ public class RowGameController {
      * @param col the col of the most recent player move
      */
 	private boolean checkDiagonal(int row, int col){
-		return (gameModel.getBLockModel()[0][0].getContents().equals(gameModel.getBLockModel()[1][1].getContents()) &&
-						gameModel.getBLockModel()[1][1].getContents().equals(gameModel.getBLockModel()[2][2].getContents()) && 
-						gameModel.getBLockModel()[2][2].getContents().equals(gameModel.getBLockModel()[row][col].getContents())) || 
+		return (gameModel.getBlockModel()[0][0].getContents().equals(gameModel.getBlockModel()[1][1].getContents()) &&
+						gameModel.getBlockModel()[1][1].getContents().equals(gameModel.getBlockModel()[2][2].getContents()) && 
+						gameModel.getBlockModel()[2][2].getContents().equals(gameModel.getBlockModel()[row][col].getContents())) || 
 
-						(gameModel.getBLockModel()[0][2].getContents().equals(gameModel.getBLockModel()[1][1].getContents()) &&
-						gameModel.getBLockModel()[1][1].getContents().equals(gameModel.getBLockModel()[2][0].getContents())) && 
-						gameModel.getBLockModel()[2][0].getContents().equals(gameModel.getBLockModel()[row][col].getContents());
+						(gameModel.getBlockModel()[0][2].getContents().equals(gameModel.getBlockModel()[1][1].getContents()) &&
+						gameModel.getBlockModel()[1][1].getContents().equals(gameModel.getBlockModel()[2][0].getContents())) && 
+						gameModel.getBlockModel()[2][0].getContents().equals(gameModel.getBlockModel()[row][col].getContents());
 	}
 
 	/**
@@ -177,8 +177,8 @@ public class RowGameController {
     public void resetGame() {
         for(int row = 0;row<3;row++) {
             for(int column = 0;column<3;column++) {
-                gameModel.getBLockModel()[row][column].reset();
-		gameModel.getBLockModel()[row][column].setIsLegalMove(true);
+                gameModel.getBlockModel()[row][column].reset();
+		gameModel.getBlockModel()[row][column].setIsLegalMove(true);
 		gameView.updateBlock(gameModel,row,column);
             }
         }

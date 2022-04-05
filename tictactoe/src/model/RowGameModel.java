@@ -81,7 +81,7 @@ public class RowGameModel
      * get the RowBlockModel object
      * @return RowBlockModel object
      */
-    public RowBlockModel[][] getBLockModel(){
+    public RowBlockModel[][] getBlockModel(){
         return this.blocksData;
     }
 }

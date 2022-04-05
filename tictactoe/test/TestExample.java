@@ -36,20 +36,4 @@ public class TestExample {
     public void testNewBlockViolatesPrecondition() {
 	RowBlockModel block = new RowBlockModel(null);
     }
-
-
-    @Test
-    public void testPlayer1Wins() {
-        RowGameModel model = game.getRowGameModel();
-
-        game.move(game.getRowGameView().getBlocks()[0][0]);
-        game.move(game.getRowGameView().getBlocks()[1][0]);
-        game.move(game.getRowGameView().getBlocks()[0][1]);
-        game.move(game.getRowGameView().getBlocks()[2][0]);
-        game.move(game.getRowGameView().getBlocks()[0][2]);
-
-        assertEquals("Player 1 wins!", model.getFinalResult());
-        assertEquals(4, model.getMovesLeft());
-    }
-
 }
