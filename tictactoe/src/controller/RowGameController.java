@@ -11,13 +11,13 @@ import model.RowGameModel;
 import view.RowGameGUI;
 
 public class RowGameController {
-    public RowGameModel gameModel;
-    public RowGameGUI gameView;
+    private RowGameModel gameModel;
+    private RowGameGUI gameView;
 	private static final int ROWS = 3;
     private static final int COLUMNS = 3;
     /**
      * Creates a new game initializing the GUI.
-     */
+     */  
     public RowGameController() {
 	gameModel = new RowGameModel();
 	gameView = new RowGameGUI(this);
@@ -59,7 +59,7 @@ public class RowGameController {
 	 * @param playerChar String of the current player (X or O)
 	 * @param result String to be printed proclaiming the winner
      */
-	public void checkWinner(JButton block, String playerChar, String result){
+	private void checkWinner(JButton block, String playerChar, String result){
 		if(playerChar.equals("X")){
 			gameModel.player = "2";
 		}else{
@@ -72,23 +72,12 @@ public class RowGameController {
 					gameModel.blocksData[row][col].setContents(playerChar);
 					gameView.updateBlock(gameModel, row, col);
 					if(gameModel.movesLeft < 7) {
-						//check horizontal
-						if((gameModel.blocksData[row][0].getContents().equals(gameModel.blocksData[row][1].getContents()) &&
-						gameModel.blocksData[row][1].getContents().equals(gameModel.blocksData[row][2].getContents())) ||
-						//check vertical
-						(gameModel.blocksData[0][col].getContents().equals(gameModel.blocksData[1][col].getContents()) &&
-						gameModel.blocksData[1][col].getContents().equals(gameModel.blocksData[2][col].getContents()))) {
-							System.out.println("h or v");
+						//check horizontal and vertical win condition
+						if(checkHorizontal(row) || checkVertical(col)) {
 							gameModel.setFinalResult(result);
 							endGame();
 						//check diagonal if applicable
-						} else if ((gameModel.blocksData[0][0].getContents().equals(gameModel.blocksData[1][1].getContents()) &&
-						gameModel.blocksData[1][1].getContents().equals(gameModel.blocksData[2][2].getContents()) && 
-						gameModel.blocksData[2][2].getContents().equals(gameModel.blocksData[row][col].getContents())) || 
-
-						(gameModel.blocksData[0][2].getContents().equals(gameModel.blocksData[1][1].getContents()) &&
-						gameModel.blocksData[1][1].getContents().equals(gameModel.blocksData[2][0].getContents())) && 
-						gameModel.blocksData[2][0].getContents().equals(gameModel.blocksData[row][col].getContents())) {
+						} else if (checkDiagonal(row, col)) {
 							gameModel.setFinalResult(result);
 							endGame();
 						} else if(gameModel.movesLeft==0) {
@@ -101,6 +90,50 @@ public class RowGameController {
 				} 
 			}
 		}
+	}
+
+	/**
+     * Checks whether the player has won by horizontal
+     *
+     * @param row the row of the most recent player move
+     */
+	private boolean checkHorizontal(int row){
+		for(int i = 0;i < COLUMNS - 1;i++){
+			if(!gameModel.blocksData[row][i].getContents().equals(gameModel.blocksData[row][i + 1].getContents())){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+     * Checks whether the player has won by vertical
+     *
+     * @param col the row of the most recent player move
+     */
+	private boolean checkVertical(int col){
+		for(int i = 0;i < ROWS - 1;i++){
+			if(!gameModel.blocksData[i][col].getContents().equals(gameModel.blocksData[i + 1][col].getContents())){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+     * Checks whether the player has won by diagonal
+     *
+	 * @param row the row of the most recent player move
+     * @param col the col of the most recent player move
+     */
+	private boolean checkDiagonal(int row, int col){
+		return (gameModel.blocksData[0][0].getContents().equals(gameModel.blocksData[1][1].getContents()) &&
+						gameModel.blocksData[1][1].getContents().equals(gameModel.blocksData[2][2].getContents()) && 
+						gameModel.blocksData[2][2].getContents().equals(gameModel.blocksData[row][col].getContents())) || 
+
+						(gameModel.blocksData[0][2].getContents().equals(gameModel.blocksData[1][1].getContents()) &&
+						gameModel.blocksData[1][1].getContents().equals(gameModel.blocksData[2][0].getContents())) && 
+						gameModel.blocksData[2][0].getContents().equals(gameModel.blocksData[row][col].getContents());
 	}
 
     /**
