@@ -11,8 +11,8 @@ import model.RowGameModel;
 import view.RowGameGUI;
 
 public class RowGameController {
-    private RowGameModel gameModel;
-    private RowGameGUI gameView;
+    public RowGameModel gameModel;
+    public RowGameGUI gameView;
 	private static final int ROWS = 3;
     private static final int COLUMNS = 3;
     /**

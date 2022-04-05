@@ -28,8 +28,47 @@ public class TestExample {
         assertEquals (9, game.gameModel.movesLeft);
     }
 
+    //Illegal arguments and moves
     @Test(expected = IllegalArgumentException.class)
     public void testNewBlockViolatesPrecondition() {
 	RowBlockModel block = new RowBlockModel(null);
     }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testIllegalBlocksDataIndex() {
+        game.gameModel.blocksData[-1][0].setContents("X");
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testIllegalUpdateBlockIndex() {
+        game.gameView.updateBlock(game.gameModel, -1, 0);
+    }
+
+    //Legal arguments and moves
+    @Test
+    public void testFirstMove() {
+        game.gameModel.blocksData[0][0].setContents("X");
+        game.gameView.updateBlock(game.gameModel, 0, 0);
+
+        assertEquals("X", game.gameModel.blocksData[0][0].getContents());
+    }
+
+    @Test
+    public void testQuickGame() {
+        game.gameModel.blocksData[0][0].setContents("X");
+        game.gameView.updateBlock(game.gameModel, 0, 0);
+
+        game.gameModel.blocksData[0][0].setContents("O");
+        game.gameView.updateBlock(game.gameModel, 0, 1);
+
+        game.gameModel.blocksData[0][0].setContents("X");
+        game.gameView.updateBlock(game.gameModel, 1, 0);
+
+        game.gameModel.blocksData[0][0].setContents("O");
+        game.gameView.updateBlock(game.gameModel, 0, 2);
+
+        game.gameModel.blocksData[0][0].setContents("X");
+        game.gameView.updateBlock(game.gameModel, 2, 0);
+    }
+
 }
