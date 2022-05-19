@@ -130,4 +130,38 @@ public class TestController {
         assertEquals("Player 2 wins!", model.getFinalResult());
         assertEquals(3, model.getMovesLeft());
     }
+
+    @Test
+    public void testLegalUndo() {
+        RowGameModel model = game.getRowGameModel();
+
+        game.move(game.getRowGameView().getBlocks()[0][0]);
+        game.move(game.getRowGameView().getBlocks()[1][0]);
+        game.undoLastMove();
+        game.move(game.getRowGameView().getBlocks()[1][0]);
+        game.move(game.getRowGameView().getBlocks()[0][1]);
+        game.move(game.getRowGameView().getBlocks()[2][0]);
+        game.move(game.getRowGameView().getBlocks()[0][2]);
+
+        assertEquals("Player 1 wins!", model.getFinalResult());
+        assertEquals(4, model.getMovesLeft());
+    }
+
+    @Test
+    public void testIllegalUndo() {
+        RowGameModel model = game.getRowGameModel();
+
+        game.move(game.getRowGameView().getBlocks()[0][0]);
+        game.move(game.getRowGameView().getBlocks()[1][0]);
+        game.move(game.getRowGameView().getBlocks()[0][1]);
+        game.move(game.getRowGameView().getBlocks()[2][0]);
+        game.move(game.getRowGameView().getBlocks()[0][2]);
+        assertEquals("Player 1 wins!", model.getFinalResult());
+        assertEquals(4, model.getMovesLeft());
+
+        game.undoLastMove();
+        assertEquals("You cannot undo a move after the game has finished!", game.getRowGameView().getPlayerturn().getText());
+    }
+
+
 }

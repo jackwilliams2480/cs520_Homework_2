@@ -16,6 +16,9 @@ public class RowGameController {
     private RowGameGUI gameView;
 	private static final int ROWS = 3;
     private static final int COLUMNS = 3;
+	private static int lastMoveRow = -1;
+	private static int lastMoveColumn = -1;
+	private static boolean recentUndoFlag = false;
     
 	/**
      * Creates a new game initializing the GUI.
@@ -45,6 +48,7 @@ public class RowGameController {
 			}
 		}else{
 			gameModel.setMovesLeft(gameModel.getMovesLeft() - 1);
+			recentUndoFlag = false;
 			if(gameModel.getMovesLeft() % 2 == 1) {
 				gameView.getPlayerturn().setText("'X': Player 1");
 			} else{
@@ -58,6 +62,33 @@ public class RowGameController {
 				// Check whether player 2 won
 				checkWinner(block, "O", "Player 2 wins!");
 			}
+		}
+    }
+
+
+	/**
+     * Undos the prevous move if called upon
+     */
+    public void undoLastMove() {
+		if(lastMoveRow == -1 || lastMoveColumn == -1 || gameModel.getMovesLeft() == 9){
+			gameView.getPlayerturn().setText("You cannot undo when no moves have been played!");
+		} else if(gameModel.getFinalResult() != null){
+			gameView.getPlayerturn().setText("You cannot undo a move after the game has finished!");
+		} else if(recentUndoFlag){
+			gameView.getPlayerturn().setText("You already undid your prevous move.");
+		}else{
+			recentUndoFlag = true;
+			gameModel.getBlockModel()[lastMoveRow][lastMoveColumn].setContents("");
+			gameModel.getBlockModel()[lastMoveRow][lastMoveColumn].setIsLegalMove(true);
+			gameModel.setMovesLeft(gameModel.getMovesLeft() + 1);
+			if(gameModel.getMovesLeft() % 2 == 1) {
+				gameView.getPlayerturn().setText("'X': Player 1");
+				gameModel.setCurrentPlayer("1");
+			} else{
+				gameView.getPlayerturn().setText("'O': Player 2");
+				gameModel.setCurrentPlayer("2");
+			}
+			gameView.updateBlock(gameModel, lastMoveRow, lastMoveColumn);
 		}
     }
 
@@ -78,6 +109,8 @@ public class RowGameController {
 		for(int row = 0;row < ROWS;row++){
 			for(int col = 0; col < COLUMNS;col++){
 				if(block == gameView.getBlocks()[row][col]) {
+					lastMoveRow = row;
+					lastMoveColumn = col;
 					gameModel.getBlockModel()[row][col].setContents(playerChar);
 					gameModel.getBlockModel()[row][col].setIsLegalMove(false);
 					gameView.updateBlock(gameModel, row, col);
